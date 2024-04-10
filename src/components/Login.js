@@ -21,13 +21,13 @@ const Login = () => {
             localStorage.setItem('role', role);
             
             switch (role) {
-                case '0':
+                case 0:
                     navigate('/home');
                     break;
-                case '1':
+                case 1:
                     navigate('/tech-support-dashboard');
                     break;
-                case '2':
+                case 2:
                     navigate('/admin-dashboard');
                     break;
                 default:

@@ -6,7 +6,7 @@ const Navbar = () => {
     const role = localStorage.getItem('role');
 
     const handleLogout = () => {
-       
+
         localStorage.clear();
         window.location.href = '/';
     };
@@ -17,7 +17,7 @@ const Navbar = () => {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Ticket Management System
                 </Typography>
-                {role === '0' && (
+                {role == "0" && (
                     <>
                         <Button color="inherit" component={RouterLink} to="/home">
                             Home
@@ -30,14 +30,14 @@ const Navbar = () => {
                         </Button> */}
                     </>
                 )}
-                {role === '1' && (
-                    <Button color="inherit" component={RouterLink} to="/home">
+                {role == "1" && (
+                    <Button color="inherit" component={RouterLink} to="/tech-support-dashboard">
                         Tech Support Dashboard
                     </Button>
                 )}
-                {role === '2' && (
+                {role == "2" && (
                     <>
-                        <Button color="inherit" component={RouterLink} to="/home">
+                        <Button color="inherit" component={RouterLink} to="/admin-dashboard">
                             Admin Dashboard
                         </Button>
                         <Button color="inherit" component={RouterLink} to="/admin-tickets">

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Button, Container, Grid } from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const TicketForm = ({ onSubmit }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [attachment, setAttachment] = useState(null);
-
+    const navigate = useNavigate(); 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const userId = localStorage.getItem('userId');
-        
+
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
@@ -19,25 +20,27 @@ const TicketForm = ({ onSubmit }) => {
         }
 
         try {
-            
+
             const response = await axios.post('http://localhost:5000/api/tickets', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            params: {
-                user_id: userId
-            }
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                params: {
+                    user_id: userId
+                }
             });
 
-            
+
             console.log('Ticket created:', response.data);
 
-           
+
             setTitle('');
             setDescription('');
             setAttachment(null);
+            alert('Ticket successfully created!');
+            navigate('/home');
         } catch (error) {
-            
+
             console.error('Error creating ticket:', error);
         }
     };

@@ -6,24 +6,23 @@ const AdminDashboard = () => {
     const [tickets, setTickets] = useState([]);
 
     useEffect(() => {
-        
-        const fetchTickets = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/api/admin/tickets');
-                setTickets(response.data); 
-            } catch (error) {
-                console.error('Error fetching tickets:', error);
-            }
-        };
-    
         fetchTickets();
     }, []);
 
+    const fetchTickets = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/admin/tickets');
+            setTickets(response.data); 
+        } catch (error) {
+            console.error('Error fetching tickets:', error);
+        }
+    };
+
     const handleMarkAsResolved = async (ticketId) => {
         try {
-            
             await axios.put(`http://localhost:5000/api/admin/tickets/${ticketId}/mark-resolved`);
             
+            fetchTickets();
         } catch (error) {
             console.error('Error marking ticket as resolved:', error);
         }
@@ -31,9 +30,9 @@ const AdminDashboard = () => {
 
     const handleMarkAsClosed = async (ticketId) => {
         try {
-           
             await axios.put(`http://localhost:5000/api/admin/tickets/${ticketId}/mark-closed`);
-           
+            
+            fetchTickets();
         } catch (error) {
             console.error('Error marking ticket as closed:', error);
         }

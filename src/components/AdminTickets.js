@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import AssignSupport from './AssignSupport'; 
+import AssignSupport from './AssignSupport';
 import axios from 'axios';
 
 const AdminTickets = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    
-    const fetchTickets = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/admin/tickets');
-        setTickets(response.data);
-      } catch (error) {
-        console.error('Error fetching tickets:', error);
-      }
-    };
+    fetchTickets();
+  }, []);
 
-    fetchTickets(); 
-  }, []); 
+  const fetchTickets = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/admin/tickets');
+      setTickets(response.data);
+    } catch (error) {
+      console.error('Error fetching tickets:', error);
+    }
+  };
+
+  const handleUpdateTicket = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/admin/tickets');
+      setTickets(response.data);
+      console.log('Ticket data updated successfully');
+    } catch (error) {
+      console.error('Error updating ticket data:', error);
+    }
+  };
 
   return (
     <div>
@@ -46,7 +55,7 @@ const AdminTickets = () => {
                 <TableCell>{ticket.status}</TableCell>
                 <TableCell>{ticket.support_id}</TableCell>
                 <TableCell>
-                  <AssignSupport ticketId={ticket.id} /> 
+                  <AssignSupport ticketId={ticket.id} onUpdate={handleUpdateTicket} />
                 </TableCell>
               </TableRow>
             ))}

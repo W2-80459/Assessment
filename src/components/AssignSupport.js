@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
 
-const AssignSupport = ({ ticketId }) => {
+const AssignSupport = ({ ticketId, onUpdate }) => {
   const [supportId, setSupportId] = useState('');
   const [supportOptions, setSupportOptions] = useState([]);
 
   useEffect(() => {
-    
     const fetchSupportOptions = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/admin/support-options');
@@ -17,17 +16,19 @@ const AssignSupport = ({ ticketId }) => {
       }
     };
 
-    fetchSupportOptions(); 
-  }, []); 
+    fetchSupportOptions();
+  }, []);
 
   const handleAssignSupport = async () => {
     try {
-      
-      const response = await axios.put(`http://localhost:5000/api/admin/tickets/${ticketId}/assign-support`, {
+      await axios.put(`http://localhost:5000/api/admin/tickets/${ticketId}/assign-support`, {
         supportId: supportId
       });
 
       console.log('Support assigned successfully');
+      
+      
+      onUpdate();
     } catch (error) {
       console.error('Error assigning support:', error);
     }
